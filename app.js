@@ -55,7 +55,7 @@ let state = route();
 function link(page) { return '#/' + state.language + '/' + page; }
 function email(subject) { return 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject); }
 function button(label, href, style='primary') { return '<a class="button ' + style + '" href="' + escapeText(href) + '">' + escapeText(label) + '</a>'; }
-function brand(c) { return '<a class="brand" href="' + link('home') + '" aria-label="Tee How"><img class="brand-logo" src="assets/teehow-logo-web.png" width="48" height="48" alt=""><span><span class="brand-name">Tee How</span><span class="brand-sub">' + c.suffix + '</span></span></a>'; }
+function brand(c) { return '<a class="brand" href="' + link('home') + '" aria-label="Tee How"><img class="brand-logo" src="assets/teehow-logo-web-v2.png" width="48" height="48" alt=""><span><span class="brand-name">Tee How</span><span class="brand-sub">' + c.suffix + '</span></span></a>'; }
 function list(items) { return '<ul class="feature-list">' + items.map(item=>'<li>' + escapeText(item) + '</li>').join('') + '</ul>'; }
 function contactBand(c) { return '<section class="contact-band"><div class="wrap contact-grid"><div><h2>' + c.contactTitle + '</h2><p>' + c.contactIntro + '</p></div>' + button(c.talk,link('contact')) + '</div></section>'; }
 function serviceCards(c, detailed=false) {

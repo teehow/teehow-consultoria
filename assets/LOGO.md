@@ -1,5 +1,7 @@
 # Logo Tee How
 
+Versão atual: `teehow-logo-v2.png`, `teehow-logo-web-v2.png` e `teehow-favicon-v2.png`. Corrigida com a ferramenta integrada de geração de imagens; transparente apenas fora do quadrado. Prompt de correção: preservar o monograma TH amarelo e o contorno do quadrado arredondado; preencher o buraco transparente no interior à esquerda com preto opaco, mantendo todos os elementos e a transparência externa. Versões anteriores preservadas para histórico.
+
 Monograma TH com conexões inspiradas em circuitos, em amarelo e preto. Nome e subtítulo permanecem como texto HTML acessível e traduzível.
 
 Gerado com a ferramenta integrada de geração de imagens. Original: `teehow-logo.png`; versão web: `teehow-logo-web.png`; ícone da aba: `teehow-favicon.png`. As versões menores são redimensionamentos do original, preservando transparência.
