@@ -3,7 +3,7 @@ const authorCopy = {
   pt: {
     about:'Sobre', author:'Autor e livros', personal:'Espaço pessoal · Literatura',
     aboutTitle:"Experiência em banco de dados.<br>Atenção ao seu negócio.",
-    aboutIntro:"Sou Vitor Tee How Siao Junior, responsável pela Tee How Consultoria em Tecnologia. Tenho mais de 20 anos de experiência em sistemas e bancos de dados, com atuação em projetos para instituições financeiras e outros ambientes de negócio.",
+    aboutIntro:"Sou Vitor Tee How Siao Junior, responsável pela Tee How Consultoria em Banco de Dados. Tenho mais de 20 anos de experiência em sistemas e bancos de dados, com atuação em projetos para instituições financeiras e outros ambientes de negócio.",
     professional:"Conhecimento técnico para resolver problemas reais",
     professionalText:"Minha atuação reúne Oracle, SQL Server e PostgreSQL, com foco em performance, modelagem, desenvolvimento e integração de dados. Cada projeto começa pela compreensão do problema e do seu impacto no negócio, para definir melhorias com prioridades claras e resultados verificáveis.",
     literary:'Além dos dados, outros mundos.',
@@ -26,7 +26,7 @@ const authorCopy = {
   en: {
     about:'About', author:'Author and books', personal:'Personal space · Fiction',
     aboutTitle:"Database experience.<br>Attention to your business.",
-    aboutIntro:"I am Vitor Tee How Siao Junior, the person behind Tee How Consultoria em Tecnologia. I have more than 20 years of experience with systems and databases, working on projects for financial institutions and other business environments.",
+    aboutIntro:"I am Vitor Tee How Siao Junior, the person behind Tee How Consultoria em Banco de Dados. I have more than 20 years of experience with systems and databases, working on projects for financial institutions and other business environments.",
     professional:"Technical expertise for real problems",
     professionalText:"My work spans Oracle, SQL Server and PostgreSQL, focusing on performance, modeling, development and data integration. Each project starts by understanding the problem and its business impact, so improvements have clear priorities and verifiable results.",
     literary:'Beyond data, other worlds.',

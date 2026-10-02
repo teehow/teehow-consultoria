@@ -1,4 +1,4 @@
-# Tee How Consultoria em Tecnologia
+# Tee How Consultoria em Banco de Dados
 
 Site institucional estático e bilíngue, em português e inglês, para GitHub Pages.
 
