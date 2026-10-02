@@ -48,7 +48,8 @@ function escapeText(value) { return String(value).replace(/[&<>"']/g, character 
 function preferredLanguage() { try { return localStorage.getItem('teehow-language') === 'en' ? 'en' : 'pt'; } catch { return 'pt'; } }
 function route() {
   const [language, page] = location.hash.replace(/^#\/?/, '').split('/');
-  return {language: language === 'en' ? 'en' : language === 'pt' ? 'pt' : preferredLanguage(), page: pages.includes(page) ? page : 'home'};
+  const selectedPage = ['databases','sql','plsql','bundle'].includes(page) ? 'courses' : page;
+  return {language: language === 'en' ? 'en' : language === 'pt' ? 'pt' : preferredLanguage(), page: pages.includes(selectedPage) ? selectedPage : 'home'};
 }
 let state = route();
 function link(page) { return '#/' + state.language + '/' + page; }
@@ -61,9 +62,8 @@ function serviceCards(c, detailed=false) {
   return '<div class="service-grid">' + c.services.map(([title,body,items],i)=>'<article class="service-card"><div class="number">0' + (i+1) + '<span aria-hidden="true">+</span></div><h3>' + title + '</h3><p>' + body + '</p>' + (detailed ? list(items) : '') + '</article>').join('') + '</div>';
 }
 function resourceCards(c) {
-  return '<div class="resource-grid">' + ['databases','sql','plsql'].map((key,i)=>{
-    const b=c.books[key]; return '<article class="resource ' + (key==='sql'?'featured':'') + '"><div class="resource-top"><small>' + c.bookLabel + ' / 0' + (i+1) + '</small><span class="code">' + b.code + '</span></div><div class="resource-body"><h3>' + b.title + '</h3><p>' + b.short + '</p><div class="price">' + b.price + '</div>' + button(c.details,link(key),'secondary') + '</div></article>';
-  }).join('') + '</div><div class="bundle-band"><div><h3>' + c.bundleTitle + '</h3><p>' + c.bundleIntro + '</p></div>' + button(c.bundleButton,link('bundle')) + '</div>';
+  const english = state.language === 'en';
+  return '<div class="product-panel"><span class="kicker">' + (english ? 'Coming soon' : 'Em breve') + '</span><h2>' + (english ? 'Under construction' : 'Em construção') + '</h2><p>' + (english ? 'We are preparing this section. Courses and e-books are not available for purchase at this time.' : 'Estamos preparando esta seção. Os cursos e e-books não estão disponíveis para compra neste momento.') + '</p></div>';
 }
 function appPanel(c) { return '<div class="product-panel"><div class="app-brand"><img src="assets/fatura-na-risca.png" alt="" width="72" height="72"><div><h3>Fatura na Risca</h3><p>' + c.appTagline + '</p></div></div>' + list(c.appFeatures) + '<span class="pill">' + c.appStatus + '</span></div>'; }
 function pageHead(title, description, c, back=false) { return '<section class="page-head"><div class="wrap">' + (back?'<a class="back" href="' + link('courses') + '">' + c.back + '</a>':'') + '<span class="kicker">Tee How / ' + c.suffix + '</span><h1>' + title + '</h1><p>' + description + '</p></div></section>'; }
@@ -72,7 +72,7 @@ function home(c) {
   return '<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">' + c.eyebrow + '</div><h1>' + c.hero + '</h1><p class="lead">' + c.intro + '</p><div class="actions">' + button(c.talk,link('contact')) + button(c.explore,link('services'),'outline') + '</div></div><div class="hero-side"><div class="hero-side-top"><span>' + c.sideLabel + '</span><span aria-hidden="true">/ TH</span></div><div class="hero-statement">' + c.side + '</div><div class="hero-topics">' + c.topics.map((topic,i)=>'<div class="topic"><b>0' + (i+1) + '</b>' + topic + '</div>').join('') + '</div></div></div></section>' +
     '<section class="section gray"><div class="wrap"><div class="section-heading"><div><span class="kicker">' + c.servicesKicker + '</span><h2>' + c.servicesTitle + '</h2></div><p>' + c.servicesIntro + '</p></div>' + serviceCards(c) + '</div></section>' +
     '<section class="section"><div class="wrap product-grid"><div class="product-copy"><span class="kicker">' + c.productKicker + '</span><h2>' + c.productTitle + '</h2><p>' + c.appIntro + '</p><a class="text-link" href="' + link('app') + '">' + c.appLink + '</a></div>' + appPanel(c) + '</div></section>' +
-    '<section class="section gray"><div class="wrap"><div class="section-heading"><div><span class="kicker">' + c.coursesKicker + '</span><h2>' + c.coursesTitle + '</h2></div><p>' + c.coursesIntro + '</p></div>' + resourceCards(c) + '</div></section>' + contactBand(c);
+    '<section class="section gray"><div class="wrap"><div class="section-heading"><div><span class="kicker">' + c.coursesKicker + '</span><h2>' + c.coursesHeading + '</h2></div></div>' + resourceCards(c) + '</div></section>' + contactBand(c);
 }
 function courseDetail(key,c) {
   const isBundle=key==='bundle', book=isBundle?{title:c.bundleTitle,intro:c.bundleIntro,price:'US$ 67',model:c.bundleLabel,subjects:c.bundleIncluded}:c.books[key];
@@ -81,7 +81,7 @@ function courseDetail(key,c) {
 function content(page,c) {
   if (page==='home') return home(c);
   if (page==='services') return pageHead(c.nav[1],c.servicesIntro,c) + '<section class="section"><div class="wrap">' + serviceCards(c,true) + '</div></section>' + contactBand(c);
-  if (page==='courses') return pageHead(c.coursesHeading,c.coursesDescription,c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '<p class="notice">' + c.offerNote + '</p><p class="notice">' + c.materialDisclaimer + '</p></div></section>' + contactBand(c);
+  if (page==='courses') return pageHead(c.coursesHeading,state.language==='en'?'New learning materials are being prepared.':'Novos materiais de aprendizado estão sendo preparados.',c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '</div></section>' + contactBand(c);
   if (page==='app') return pageHead('Fatura na Risca',c.appTagline,c) + '<section class="section"><div class="wrap product-grid"><div class="product-copy"><span class="kicker">Android / ' + c.productKicker + '</span><h2>' + c.productTitle + '</h2><p>' + c.appIntro + '</p><p>' + c.appDetail + '</p><p><strong>' + c.appPrivacy + '</strong></p><p>' + c.appPrice + '</p><p class="notice">' + c.appNote + '</p>' + legal(c) + '</div>' + appPanel(c) + '</div></section>' + contactBand(c);
   if (page==='contact') return pageHead(c.contactPage,c.contactPageIntro,c) + '<section class="section"><div class="wrap detail-grid"><div><span class="kicker">' + c.direct + '</span><h2>' + c.contactTitle + '</h2><p>' + c.contactIntro + '</p>' + button(c.send,email(c.subject)) + '<p class="notice">' + c.contactNote + '</p></div><div class="contact-card"><h3>Tee How</h3><dl><dt>' + c.company + '</dt><dd>Tee How Consultoria em Tecnologia</dd><dt>' + c.responsible + '</dt><dd>Vitor Tee How Siao Junior</dd><dt>E-mail</dt><dd><a class="text-link" href="' + email(c.subject) + '">' + EMAIL + '</a></dd></dl></div></div></section>';
   return courseDetail(page,c);

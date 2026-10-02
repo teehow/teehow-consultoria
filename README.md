@@ -5,7 +5,7 @@ Site institucional estático e bilíngue, em português e inglês, para GitHub P
 ## Conteúdo
 
 - Início, serviços, cursos e e-books, Fatura na Risca e contato.
-- Páginas dos três e-books e da trilha completa, com botão de retorno.
+- Seção de cursos e e-books em construção nos dois idiomas, sem ofertas ou preços públicos. Links antigos dos materiais exibem o mesmo aviso.
 - Um botão alterna o idioma preservando a página. Textos e estrutura são equivalentes.
 - Layout responsivo, menu móvel, navegação por teclado e respeito à redução de movimento.
 - Links das políticas existentes preservados no repositório do aplicativo.
@@ -28,6 +28,6 @@ Não foi alterado o DNS do Registro.br nem ativado um domínio personalizado. Pr
 
 ## Informações comerciais
 
-Preços dos e-books preservam a apresentação existente: US$ 9 como complemento de checkout, US$ 37 para SQL, US$ 47 após a compra e US$ 67 para a trilha. Nenhum checkout funcional foi encontrado na fonte local; o contato por e-mail é usado no lugar de links fictícios de compra. Confirmar os links reais antes de habilitar compra direta.
+Os e-books não foram aprovados; a seção está em construção. O conteúdo anterior permanece no código para revisão futura, mas não é exibido nas páginas, inclusive nos endereços antigos dos materiais. Não há botões de aquisição ativos.
 
 O Fatura na Risca está em preparação para publicação, com preço planejado de R$ 10. Não há um link de produção confirmado da Play Store no site.
