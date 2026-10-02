@@ -5,6 +5,7 @@ Site institucional estático e bilíngue, em português e inglês, para GitHub P
 ## Conteúdo
 
 - Início, serviços, cursos e e-books, Fatura na Risca e contato.
+- Serviços focados em banco de dados: tuning, administração, modelagem, SQL/PLSQL, integração e análise, com fluxo de diagnóstico, plano de ação e validação.
 - Seção de cursos e e-books em construção nos dois idiomas, sem ofertas ou preços públicos. Links antigos dos materiais exibem o mesmo aviso.
 - Um botão alterna o idioma preservando a página. Textos e estrutura são equivalentes.
 - Layout responsivo, menu móvel, navegação por teclado e respeito à redução de movimento.
