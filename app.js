@@ -54,7 +54,7 @@ function escapeText(value) { return String(value).replace(/[&<>"']/g, character 
 function preferredLanguage() { try { return localStorage.getItem('teehow-language') === 'en' ? 'en' : 'pt'; } catch { return 'pt'; } }
 function route() {
   const [language, page] = location.hash.replace(/^#\/?/, '').split('/');
-  const selectedPage = ['databases','sql','plsql','bundle'].includes(page) ? 'courses' : page;
+  const selectedPage = ['sql','plsql','bundle'].includes(page) ? 'courses' : page;
   return {language: language === 'en' ? 'en' : language === 'pt' ? 'pt' : preferredLanguage(), page: pages.includes(selectedPage) ? selectedPage : 'home'};
 }
 let state = route();
@@ -68,8 +68,7 @@ function serviceCards(c, detailed=false) {
   return '<div class="service-grid">' + (detailed ? c.services : c.services.slice(0,3)).map(([title,body,items],i)=>'<article class="service-card"><div class="number">0' + (i+1) + '<span aria-hidden="true">+</span></div><h3>' + title + '</h3><p>' + body + '</p>' + (detailed ? list(items) : '') + '</article>').join('') + '</div>' + (detailed ? '' : '<p>' + button(c.servicesMore,link('services'),'secondary') + '</p>');
 }
 function resourceCards(c) {
-  const english = state.language === 'en';
-  return '<div class="product-panel"><span class="kicker">' + (english ? 'Coming soon' : 'Em breve') + '</span><h2>' + (english ? 'Under construction' : 'Em construção') + '</h2><p>' + (english ? 'We are preparing this section. Courses and e-books are not available for purchase at this time.' : 'Estamos preparando esta seção. Os cursos e e-books não estão disponíveis para compra neste momento.') + '</p></div>';
+  return foundationCatalog(c);
 }
 function appPanel(c) { return '<div class="product-panel"><div class="app-brand"><img src="assets/fatura-na-risca.png" alt="" width="72" height="72"><div><h3>Fatura na Risca</h3><p>' + c.appTagline + '</p></div></div>' + list(c.appFeatures) + '<span class="pill">' + c.appStatus + '</span></div>'; }
 function pageHead(title, description, c, back=false) { return '<section class="page-head"><div class="wrap">' + (back?'<a class="back" href="' + link('courses') + '">' + c.back + '</a>':'') + '<span class="kicker">Tee How / ' + c.suffix + '</span><h1>' + title + '</h1><p>' + description + '</p></div></section>'; }
@@ -87,7 +86,8 @@ function courseDetail(key,c) {
 function content(page,c) {
   if (page==='home') return home(c);
   if (page==='services') return pageHead(c.servicesPage,c.servicesIntro,c) + '<section class="section"><div class="wrap">' + serviceCards(c,true) + '</div></section><section class="section gray"><div class="wrap"><div class="section-heading"><h2>' + c.processTitle + '</h2><p>' + c.processIntro + '</p></div><div class="service-grid">' + c.processSteps.map(([title,body],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + body + '</p></article>').join('') + '</div></div></section>' + contactBand(c);
-  if (page==='courses') return pageHead(c.coursesHeading,state.language==='en'?'New learning materials are being prepared.':'Novos materiais de aprendizado estão sendo preparados.',c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '</div></section>' + contactBand(c);
+  if (page==='courses') return pageHead(c.coursesHeading,state.language==='en'?'Start with database foundations. Explore our first e-book; its purchase link is under review.':'Comece pelos fundamentos de banco de dados. Conheça nosso primeiro e-book; o link de compra está em validação.',c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '</div></section>' + contactBand(c);
+  if (page==='databases') return foundationLanding(c);
   if (page==='app') return pageHead('Fatura na Risca',c.appTagline,c) + '<section class="section"><div class="wrap product-grid"><div class="product-copy"><span class="kicker">Android / ' + c.productKicker + '</span><h2>' + c.productTitle + '</h2><p>' + c.appIntro + '</p><p>' + c.appDetail + '</p><p><strong>' + c.appPrivacy + '</strong></p><p>' + c.appPrice + '</p><p class="notice">' + c.appNote + '</p>' + legal(c) + '</div>' + appPanel(c) + '</div></section>' + contactBand(c);
   if (page==='contact') return pageHead(c.contactPage,c.contactPageIntro,c) + '<section class="section"><div class="wrap detail-grid"><div><span class="kicker">' + c.direct + '</span><h2>' + c.contactTitle + '</h2><p>' + c.contactIntro + '</p>' + button(c.send,email(c.subject)) + '<p class="notice">' + c.contactNote + '</p></div><div class="contact-card"><h3>Tee How</h3><dl><dt>' + c.company + '</dt><dd>Tee How Consultoria em Tecnologia</dd><dt>' + c.responsible + '</dt><dd>Vitor Tee How Siao Junior</dd><dt>E-mail</dt><dd><a class="text-link" href="' + email(c.subject) + '">' + EMAIL + '</a></dd></dl></div></div></section>';
   return courseDetail(page,c);
@@ -99,9 +99,9 @@ function render() {
   document.getElementById('header').innerHTML='<div class="wrap header-inner">' + brand(c) + '<nav class="nav" id="nav" aria-label="' + (state.language==='pt'?'Navegação principal':'Main navigation') + '">' + ['home','services','courses','app','contact'].map((p,i)=>'<a href="' + link(p) + '"' + (active===p?' aria-current="page"':'') + '>' + c.nav[i] + '</a>').join('') + '</nav><div class="header-actions"><button class="menu-button" aria-expanded="false" aria-controls="nav">' + c.menu + '</button><button class="lang-button" aria-label="' + c.change + '" lang="' + (state.language==='pt'?'en':'pt-BR') + '"><span aria-hidden="true">◎</span>' + (state.language==='pt'?'English':'Português') + '</button></div></div>';
   document.getElementById('main').innerHTML=content(state.page,c);
   document.getElementById('footer').innerHTML='<div class="wrap"><div class="footer-top"><div>' + brand(c) + '<p>' + c.footer + '</p></div><div class="footer-links"><a href="' + link('courses') + '">' + c.nav[2] + '</a><a href="' + POLICY + 'privacy.html">' + c.privacy + '</a><a href="' + POLICY + 'terms.html">' + c.terms + '</a><a href="' + link('contact') + '">' + c.nav[4] + '</a></div></div><div class="footer-bottom"><span>© ' + new Date().getFullYear() + ' Tee How Consultoria em Tecnologia. ' + c.rights + '</span><span>' + c.local + '</span></div></div>';
-  const pageTitle=state.page==='home'?c.title:state.page==='bundle'?c.bundleTitle:(c.books[state.page]?.title ?? c.nav[pages.indexOf(state.page)]);
+  const pageTitle=state.page==='databases'?foundationCopy[state.language].title:state.page==='home'?c.title:state.page==='bundle'?c.bundleTitle:(c.books[state.page]?.title ?? c.nav[pages.indexOf(state.page)]);
   document.title=pageTitle+' | Tee How';
-  document.querySelector('meta[name="description"]').content=c.pageDescription;
+  document.querySelector('meta[name="description"]').content=state.page==='databases'?foundationCopy[state.language].meta:c.pageDescription;
   document.querySelector('.lang-button').addEventListener('click',()=>{const next=state.language==='pt'?'en':'pt';try{localStorage.setItem('teehow-language',next);}catch{}location.hash='#/'+next+'/'+state.page;});
   document.querySelector('.menu-button').addEventListener('click',event=>{const opened=document.getElementById('nav').classList.toggle('open');event.currentTarget.setAttribute('aria-expanded',String(opened));event.currentTarget.textContent=opened?c.close:c.menu;});
 }
