@@ -1,7 +1,7 @@
 'use strict';
 const EMAIL = 'vitor.teehow@gmail.com';
 const POLICY = 'https://teehow.github.io/controle-financeiro-app/';
-const pages = ['home', 'services', 'courses', 'app', 'contact', 'databases', 'sql', 'plsql', 'bundle'];
+const pages = ['home', 'services', 'courses', 'app', 'contact', 'databases', 'sql', 'plsql', 'bundle', 'about', 'author'];
 const copy = {
   pt: {
     locale:'pt-BR', suffix:'Consultoria em Tecnologia', skip:'Pular para o conteúdo', menu:'Menu', close:'Fechar menu', change:'Switch to English', nav:['Início','Serviços','Cursos e e-books','Fatura na Risca','Contato'],
@@ -77,13 +77,15 @@ function home(c) {
   return '<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">' + c.eyebrow + '</div><h1>' + c.hero + '</h1><p class="lead">' + c.intro + '</p><div class="actions">' + button(c.talk,link('contact')) + button(c.explore,link('services'),'outline') + '</div></div><div class="hero-side"><div class="hero-side-top"><span>' + c.sideLabel + '</span><span aria-hidden="true">/ TH</span></div><div class="hero-statement">' + c.side + '</div><div class="hero-topics">' + c.topics.map((topic,i)=>'<div class="topic"><b>0' + (i+1) + '</b>' + topic + '</div>').join('') + '</div></div></div></section>' +
     '<section class="section gray"><div class="wrap"><div class="section-heading"><div><span class="kicker">' + c.servicesKicker + '</span><h2>' + c.servicesTitle + '</h2></div><p>' + c.servicesIntro + '</p></div>' + serviceCards(c) + '</div></section>' +
     '<section class="section"><div class="wrap product-grid"><div class="product-copy"><span class="kicker">' + c.productKicker + '</span><h2>' + c.productTitle + '</h2><p>' + c.appIntro + '</p><a class="text-link" href="' + link('app') + '">' + c.appLink + '</a></div>' + appPanel(c) + '</div></section>' +
-    '<section class="section gray"><div class="wrap"><div class="section-heading"><div><span class="kicker">' + c.coursesKicker + '</span><h2>' + c.coursesHeading + '</h2></div></div>' + resourceCards(c) + '</div></section>' + contactBand(c);
+    '<section class="section gray"><div class="wrap"><div class="section-heading"><div><span class="kicker">' + c.coursesKicker + '</span><h2>' + c.coursesHeading + '</h2></div></div>' + resourceCards(c) + '</div></section>' + authorTeaser() + contactBand(c);
 }
 function courseDetail(key,c) {
   const isBundle=key==='bundle', book=isBundle?{title:c.bundleTitle,intro:c.bundleIntro,price:'US$ 67',model:c.bundleLabel,subjects:c.bundleIncluded}:c.books[key];
   return pageHead(book.title,book.intro,c,true) + '<section class="section"><div class="wrap detail-grid"><div><span class="kicker">' + c.coursesKicker + '</span><h2>' + c.contentTitle + '</h2>' + list(book.subjects) + (key==='sql'?list(c.sqlIncluded):'') + '<h3>' + c.whoTitle + '</h3><p>' + c.whoText + '</p>' + (isBundle?'<div class="actions">' + ['databases','sql','plsql'].map(k=>button(c.books[k].title,link(k),'secondary')).join('') + '</div>':'') + '</div><aside class="detail-box"><span class="kicker">' + book.model + '</span><h3>' + book.title + '</h3><div class="price">' + book.price + '</div>' + button(c.askMaterial,email(c.materialSubject+book.title)) + '<p class="notice">' + c.offerNote + '</p></aside></div><div class="wrap"><p class="notice">' + c.materialDisclaimer + '</p></div></section>' + contactBand(c);
 }
 function content(page,c) {
+  if (page==='about') return aboutPage(c);
+  if (page==='author') return authorPage();
   if (page==='home') return home(c);
   if (page==='services') return pageHead(c.servicesPage,c.servicesIntro,c) + '<section class="section"><div class="wrap">' + serviceCards(c,true) + '</div></section><section class="section gray"><div class="wrap"><div class="section-heading"><h2>' + c.processTitle + '</h2><p>' + c.processIntro + '</p></div><div class="service-grid">' + c.processSteps.map(([title,body],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + body + '</p></article>').join('') + '</div></div></section>' + contactBand(c);
   if (page==='courses') return pageHead(c.coursesHeading,state.language==='en'?'Start with database foundations. Explore our first e-book; its purchase link is under review.':'Comece pelos fundamentos de banco de dados. Conheça nosso primeiro e-book; o link de compra está em validação.',c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '</div></section>' + contactBand(c);
@@ -94,14 +96,17 @@ function content(page,c) {
 }
 function render() {
   state=route(); const c=copy[state.language]; document.documentElement.lang=c.locale;
-  const active=pages.indexOf(state.page)>4?'courses':state.page;
+  const active=state.page==='author'?'about':state.page==='databases'?'courses':state.page;
+  const navigation=[...c.nav,authorCopy[state.language].about];
   document.querySelector('.skip-link').textContent=c.skip;
-  document.getElementById('header').innerHTML='<div class="wrap header-inner">' + brand(c) + '<nav class="nav" id="nav" aria-label="' + (state.language==='pt'?'Navegação principal':'Main navigation') + '">' + ['home','services','courses','app','contact'].map((p,i)=>'<a href="' + link(p) + '"' + (active===p?' aria-current="page"':'') + '>' + c.nav[i] + '</a>').join('') + '</nav><div class="header-actions"><button class="menu-button" aria-expanded="false" aria-controls="nav">' + c.menu + '</button><button class="lang-button" aria-label="' + c.change + '" lang="' + (state.language==='pt'?'en':'pt-BR') + '"><span aria-hidden="true">◎</span>' + (state.language==='pt'?'English':'Português') + '</button></div></div>';
+  document.getElementById('header').innerHTML='<div class="wrap header-inner">' + brand(c) + '<nav class="nav" id="nav" aria-label="' + (state.language==='pt'?'Navegação principal':'Main navigation') + '">' + ['home','services','courses','app','contact','about'].map((p,i)=>'<a href="' + link(p) + '"' + (active===p?' aria-current="page"':'') + '>' + navigation[i] + '</a>').join('') + '</nav><div class="header-actions"><button class="menu-button" aria-expanded="false" aria-controls="nav">' + c.menu + '</button><button class="lang-button" aria-label="' + c.change + '" lang="' + (state.language==='pt'?'en':'pt-BR') + '"><span aria-hidden="true">◎</span>' + (state.language==='pt'?'English':'Português') + '</button></div></div>';
   document.getElementById('main').innerHTML=content(state.page,c);
   document.getElementById('footer').innerHTML='<div class="wrap"><div class="footer-top"><div>' + brand(c) + '<p>' + c.footer + '</p></div><div class="footer-links"><a href="' + link('courses') + '">' + c.nav[2] + '</a><a href="' + POLICY + 'privacy.html">' + c.privacy + '</a><a href="' + POLICY + 'terms.html">' + c.terms + '</a><a href="' + link('contact') + '">' + c.nav[4] + '</a></div></div><div class="footer-bottom"><span>© ' + new Date().getFullYear() + ' Tee How Consultoria em Tecnologia. ' + c.rights + '</span><span>' + c.local + '</span></div></div>';
+  document.querySelector('.footer-links').insertAdjacentHTML('beforeend','<a href="'+link('about')+'">'+authorCopy[state.language].about+'</a><a href="'+link('author')+'">'+authorCopy[state.language].author+'</a>');
   const pageTitle=state.page==='databases'?foundationCopy[state.language].title:state.page==='home'?c.title:state.page==='bundle'?c.bundleTitle:(c.books[state.page]?.title ?? c.nav[pages.indexOf(state.page)]);
-  document.title=pageTitle+' | Tee How';
+  document.title=(state.page==='about'?authorCopy[state.language].about:state.page==='author'?authorCopy[state.language].author:pageTitle)+' | Tee How';
   document.querySelector('meta[name="description"]').content=state.page==='databases'?foundationCopy[state.language].meta:c.pageDescription;
+  if(state.page==='author') document.querySelector('meta[name="description"]').content=authorCopy[state.language].meta;
   document.querySelector('.lang-button').addEventListener('click',()=>{const next=state.language==='pt'?'en':'pt';try{localStorage.setItem('teehow-language',next);}catch{}location.hash='#/'+next+'/'+state.page;});
   document.querySelector('.menu-button').addEventListener('click',event=>{const opened=document.getElementById('nav').classList.toggle('open');event.currentTarget.setAttribute('aria-expanded',String(opened));event.currentTarget.textContent=opened?c.close:c.menu;});
 }
