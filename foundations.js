@@ -7,7 +7,7 @@ const foundationCopy = {
     view:'Conhecer o e-book', validation:"Ver na Payhip", validationNote:'Você será encaminhado à página do produto na Payhip para consultar preço, disponibilidade e condições de compra.',
     format:'E-book em PDF', language:'Conteúdo em inglês', level:'Sem experiência profissional prévia', coverAlt:'Capa do e-book Database Foundations: A Practical Beginner’s Guide, de Vitor Tee How Siao Júnior',
     stats:[['34','páginas'],['25','seções'],['10','exercícios'],['30','dias no plano de estudo']],
-    previewLabel:'Capa da edição 1.0', learnTitle:'Uma base que conecta as peças.', learnIntro:'Da estrutura de uma tabela à primeira consulta com JOIN. A sequência acompanha o conteúdo do guia, sem pular os fundamentos.',
+    previewLabel:'Capa do e-book', learnTitle:'Uma base que conecta as peças.', learnIntro:'Da estrutura de uma tabela à primeira consulta com JOIN. A sequência acompanha o conteúdo do guia, sem pular os fundamentos.',
     modules:[
       ['Fundamentos relacionais','Bancos de dados, tabelas, linhas, colunas, tipos de dados, NULL e o papel dos relacionamentos.'],
       ['Chaves e integridade','Chaves primárias, chaves estrangeiras e a relação entre clientes e pedidos.'],
@@ -31,7 +31,7 @@ const foundationCopy = {
     view:'Explore the e-book', validation:"View on Payhip", validationNote:'You will be redirected to the Payhip product page to check pricing, availability and purchase terms.',
     format:'PDF e-book', language:'Content in English', level:'No prior professional experience required', coverAlt:'Cover of Database Foundations: A Practical Beginner’s Guide, by Vitor Tee How Siao Júnior',
     stats:[['34','pages'],['25','sections'],['10','exercises'],['30','days in the study plan']],
-    previewLabel:'Version 1.0 cover', learnTitle:'Build a foundation that connects the pieces.', learnIntro:'From the structure of a table to your first JOIN query. The sequence follows the guide without skipping the fundamentals.',
+    previewLabel:'E-book cover', learnTitle:'Build a foundation that connects the pieces.', learnIntro:'From the structure of a table to your first JOIN query. The sequence follows the guide without skipping the fundamentals.',
     modules:[
       ['Relational foundations','Databases, tables, rows, columns, data types, NULL and the role of relationships.'],
       ['Keys and integrity','Primary keys, foreign keys and the relationship between customers and orders.'],
@@ -51,7 +51,7 @@ const foundationCopy = {
 };
 function foundationStatus(f) { return '<a class="button primary" href="' + escapeText(f.purchaseUrl || 'https://payhip.com/b/oiJ15') + '" target="_blank" rel="noopener noreferrer">' + escapeText(f.validation) + ' ↗</a><p class="notice">' + escapeText(f.validationNote) + '</p>'; }
 function ebookCatalogCard(f,page) {
-  return '<article class="ebook-feature"><div class="ebook-thumb"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover.png') + '" alt="' + escapeText(f.coverAlt) + '" width="773" height="1000" loading="lazy"></div><div><span class="kicker">' + f.label + '</span><h2>' + f.title + '</h2><p class="ebook-subtitle">' + f.subtitle + '</p><p>' + f.summary + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div><div class="actions">' + button(f.view,link(page)) + '</div><p class="notice"><span class="pill">' + f.validation + '</span></p></div></article>';
+  return '<article class="ebook-feature"><div class="ebook-thumb"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" loading="lazy"></div><div><span class="kicker">' + f.label + '</span><h2>' + f.title + '</h2><p class="ebook-subtitle">' + f.subtitle + '</p><p>' + f.summary + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div><div class="actions">' + button(f.view,link(page)) + '</div><p class="notice"><span class="pill">' + f.validation + '</span></p></div></article>';
 }
 function foundationCatalog(c) {
   return '<div class="ebook-catalog">' + ebookCatalogCard(foundationCopy[state.language],'databases') + ebookCatalogCard(advancedCopy[state.language],'advanced-sql') + '</div><p class="notice">' + foundationCopy[state.language].other + '</p>';
@@ -62,7 +62,7 @@ function ebookProject(f) {
 }
 function foundationLanding(c) { return ebookLanding(foundationCopy[state.language],c); }
 function ebookLanding(f,c) {
-  return '<section class="hero ebook-hero"><div class="wrap"><a class="back" href="' + link('courses') + '">' + c.back + '</a><div class="hero-grid"><div><div class="eyebrow">' + f.label + '</div><p class="ebook-name">' + f.title + ' <span>' + f.subtitle + '</span></p><h1>' + f.tagline + '</h1><p class="lead">' + f.intro + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div>' + foundationStatus(f) + '</div><figure class="ebook-cover"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover.png') + '" alt="' + escapeText(f.coverAlt) + '" width="773" height="1000" fetchpriority="high"><figcaption>' + f.previewLabel + '</figcaption></figure></div></div></section>' +
+  return '<section class="hero ebook-hero"><div class="wrap"><a class="back" href="' + link('courses') + '">' + c.back + '</a><div class="hero-grid"><div><div class="eyebrow">' + f.label + '</div><p class="ebook-name">' + f.title + ' <span>' + f.subtitle + '</span></p><h1>' + f.tagline + '</h1><p class="lead">' + f.intro + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div>' + foundationStatus(f) + '</div><figure class="ebook-cover"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" fetchpriority="high"><figcaption>' + f.previewLabel + '</figcaption></figure></div></div></section>' +
     '<section class="ebook-stats" aria-label="' + f.title + '"><div class="wrap">' + f.stats.map(([value,label])=>'<div><strong>' + value + '</strong><span>' + label + '</span></div>').join('') + '</div></section>' +
     '<section class="section"><div class="wrap"><div class="section-heading"><h2>' + f.learnTitle + '</h2><p>' + f.learnIntro + '</p></div><div class="service-grid">' + f.modules.map(([title,text],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + text + '</p></article>').join('') + '</div></div></section>' +
     '<section class="section gray"><div class="wrap product-grid"><div><span class="kicker">' + f.projectKicker + '</span><h2>' + f.projectTitle + '</h2><p>' + f.projectIntro + '</p>' + list(f.projectTasks) + '<p class="notice">' + f.projectNote + '</p></div>' + ebookProject(f) + '</div></section>' +
