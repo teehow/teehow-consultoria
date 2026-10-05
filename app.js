@@ -1,7 +1,7 @@
 'use strict';
 const EMAIL = 'vitor.teehow@gmail.com';
 const POLICY = 'https://teehow.github.io/controle-financeiro-app/';
-const pages = ['home', 'services', 'courses', 'app', 'contact', 'databases', 'sql', 'plsql', 'bundle', 'about', 'author'];
+const pages = ['home', 'services', 'courses', 'app', 'contact', 'databases', 'sql', 'plsql', 'bundle', 'about', 'author', 'advanced-sql'];
 const copy = {
   pt: {
     locale:'pt-BR', suffix:'Consultoria em Banco de Dados', skip:'Pular para o conteúdo', menu:'Menu', close:'Fechar menu', change:'Switch to English', nav:['Início','Serviços','Cursos e e-books','Fatura na Risca','Contato'],
@@ -102,15 +102,16 @@ function content(page,c) {
   if (page==='author') return authorPage();
   if (page==='home') return home(c);
   if (page==='services') return pageHead(c.servicesPage,c.servicesPageIntro,c) + '<section class="section"><div class="wrap">' + serviceCards(c,true) + '</div></section><section class="section gray"><div class="wrap"><div class="section-heading"><h2>' + c.processTitle + '</h2><p>' + c.processIntro + '</p></div><div class="service-grid">' + c.processSteps.map(([title,body],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + body + '</p></article>').join('') + '</div></div></section>' + contactBand(c);
-  if (page==='courses') return pageHead(c.coursesHeading,state.language==='en'?'Start with database foundations. Explore our first e-book and visit our Payhip store.':'Comece pelos fundamentos de banco de dados. Conheça nosso primeiro e-book e acesse nossa loja na Payhip.',c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '</div></section>' + contactBand(c);
+  if (page==='courses') return pageHead(c.coursesHeading,state.language==='en'?'From database foundations to advanced Oracle SQL. Explore our e-books and purchase through Payhip.':'Dos fundamentos de banco de dados ao SQL avançado com Oracle. Conheça nossos e-books e acesse os links de compra na Payhip.',c) + '<section class="section gray"><div class="wrap">' + resourceCards(c) + '</div></section>' + contactBand(c);
   if (page==='databases') return foundationLanding(c);
+  if (page==='advanced-sql') return advancedLanding(c);
   if (page==='app') return pageHead('Fatura na Risca',c.appTagline,c) + '<section class="section"><div class="wrap product-grid"><div class="product-copy"><span class="kicker">Android / ' + c.productKicker + '</span><h2>' + c.productTitle + '</h2><p>' + c.appIntro + '</p><p>' + c.appDetail + '</p><p><strong>' + c.appPrivacy + '</strong></p><p>' + c.appPrice + '</p><p class="notice">' + c.appNote + '</p>' + legal(c) + '</div>' + appPanel(c) + '</div></section>' + contactBand(c);
   if (page==='contact') return pageHead(c.contactPage,c.contactPageIntro,c) + '<section class="section"><div class="wrap detail-grid"><div><span class="kicker">' + c.direct + '</span><h2>' + c.contactBlockTitle + '</h2><p>' + c.contactBlockIntro + '</p>' + button(c.send,email(c.subject)) + '<p class="notice">' + c.contactNote + '</p></div><div class="contact-card"><h3>Tee How</h3><dl><dt>' + c.company + '</dt><dd>Tee How Consultoria em Banco de Dados</dd><dt>' + c.responsible + '</dt><dd>Vitor Tee How Siao Junior</dd><dt>E-mail</dt><dd><a class="text-link" href="' + email(c.subject) + '">' + EMAIL + '</a></dd></dl></div></div></section>';
   return courseDetail(page,c);
 }
 function render() {
   state=route(); const c=copy[state.language]; document.documentElement.lang=c.locale;
-  const active=state.page==='author'?'about':state.page==='databases'?'courses':state.page;
+  const active=state.page==='author'?'about':['databases','advanced-sql'].includes(state.page)?'courses':state.page;
   const navigation=[...c.nav,authorCopy[state.language].about];
   document.querySelector('.skip-link').textContent=c.skip;
   document.getElementById('header').innerHTML='<div class="wrap header-inner">' + brand(c) + '<nav class="nav" id="nav" aria-label="' + (state.language==='pt'?'Navegação principal':'Main navigation') + '">' + ['home','services','courses','app','contact','about'].map((p,i)=>'<a href="' + link(p) + '"' + (active===p?' aria-current="page"':'') + '>' + navigation[i] + '</a>').join('') + '</nav><div class="header-actions"><button class="menu-button" aria-expanded="false" aria-controls="nav">' + c.menu + '</button><button class="lang-button" aria-label="' + c.change + '" lang="' + (state.language==='pt'?'en':'pt-BR') + '"><span aria-hidden="true">◎</span>' + (state.language==='pt'?'English':'Português') + '</button></div></div>';
@@ -118,9 +119,10 @@ function render() {
   document.getElementById('footer').innerHTML='<div class="wrap"><div class="footer-top"><div>' + brand(c) + '<p>' + c.footer + '</p></div><div class="footer-links"><a href="' + link('courses') + '">' + c.nav[2] + '</a><a href="' + POLICY + 'privacy.html">' + c.privacy + '</a><a href="' + POLICY + 'terms.html">' + c.terms + '</a><a href="' + link('contact') + '">' + c.nav[4] + '</a></div></div><div class="footer-bottom"><span>© ' + new Date().getFullYear() + ' Tee How Consultoria em Banco de Dados. ' + c.rights + '</span><span>' + c.local + '</span></div></div>';
   document.querySelector('.footer-links').insertAdjacentHTML('beforeend','<a href="'+link('about')+'">'+authorCopy[state.language].about+'</a><a href="'+link('author')+'">'+authorCopy[state.language].author+'</a>');
   const pageTitle=state.page==='databases'?foundationCopy[state.language].title:state.page==='home'?c.title:state.page==='bundle'?c.bundleTitle:(c.books[state.page]?.title ?? c.nav[pages.indexOf(state.page)]);
-  document.title=(state.page==='about'?authorCopy[state.language].about:state.page==='author'?authorCopy[state.language].author:pageTitle)+' | Tee How';
+  document.title=(state.page==='about'?authorCopy[state.language].about:state.page==='author'?authorCopy[state.language].author:state.page==='advanced-sql'?advancedCopy[state.language].title:pageTitle)+' | Tee How';
   document.querySelector('meta[name="description"]').content=state.page==='databases'?foundationCopy[state.language].meta:c.pageDescription;
   if(state.page==='author') document.querySelector('meta[name="description"]').content=authorCopy[state.language].meta;
+  if(state.page==='advanced-sql') document.querySelector('meta[name="description"]').content=advancedCopy[state.language].meta;
   document.querySelector('.lang-button').addEventListener('click',()=>{const next=state.language==='pt'?'en':'pt';try{localStorage.setItem('teehow-language',next);}catch{}location.hash='#/'+next+'/'+state.page;});
   document.querySelector('.menu-button').addEventListener('click',event=>{const opened=document.getElementById('nav').classList.toggle('open');event.currentTarget.setAttribute('aria-expanded',String(opened));event.currentTarget.textContent=opened?c.close:c.menu;});
 }
