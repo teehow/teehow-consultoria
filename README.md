@@ -8,7 +8,7 @@ Site institucional estático e bilíngue, em português e inglês, para GitHub P
 - Serviços focados em banco de dados: tuning, administração, modelagem, SQL/PLSQL, integração e análise, com fluxo de diagnóstico, plano de ação e validação.
 - Primeiro material: Database Foundations: A Practical Beginner's Guide (PDF em inglês, edição 1.0, 34 páginas). Landing page em português e inglês na rota `#/pt/databases` / `#/en/databases`, associada ao catálogo e à página inicial.
 - Segundo material: Advanced SQL with Oracle: A Practical Guide (PDF em inglês, edição 1.0, 44 páginas). Landing page nas rotas `#/pt/advanced-sql` / `#/en/advanced-sql`, com 26 seções, 10 exercícios, projeto final de conciliação e plano de estudo de 30 dias. Requer SQL básico; usa Oracle Database 19c como referência.
-- Botões externos para a Payhip: Database Foundations direciona à loja https://payhip.com/TeeHowDatabaseConsulting; Advanced SQL direciona ao produto https://payhip.com/b/YsMiQ. Preços e condições são consultados na Payhip. Demais materiais em preparação.
+- Botões externos para a Payhip: Database Foundations direciona ao produto https://payhip.com/b/oiJ15; Advanced SQL direciona ao produto https://payhip.com/b/YsMiQ. Preços e condições são consultados na Payhip. Demais materiais em preparação.
 - Um botão alterna o idioma preservando a página. Textos e estrutura são equivalentes.
 - Layout responsivo, menu móvel, navegação por teclado e respeito à redução de movimento.
 - Links das políticas existentes preservados no repositório do aplicativo.
