@@ -31,6 +31,12 @@ O domínio personalizado `www.teehowconsultoria.com.br` está registrado no arqu
 
 ## Informações comerciais
 
+O catálogo compara os níveis, conteúdos e projetos dos dois e-books. As landing pages mostram objetivos concretos de prática, um CTA de compra padronizado e as amostras públicas já disponíveis na Payhip (`https://payhip.com/preview/oiJ15` e `https://payhip.com/preview/YsMiQ`). As páginas dos produtos foram verificadas em 7 de outubro de 2026 e informam download digital imediato. Preço final e condições permanecem no checkout; não se presume licença coletiva ou política de reembolso. Suporte: support@teehowconsultoria.com.br.
+
+A página de serviços apresenta entregas sujeitas ao escopo da proposta. Nenhum depoimento, resultado percentual ou caso de cliente é publicado sem confirmação e autorização do responsável.
+
+O caso anonimizado da página inicial foi informado e autorizado pelo responsável em 7 de outubro de 2026: sistema de gestão de documentos com leitura/escrita por procedures; relatório de cerca de 30 minutos para cerca de 30 segundos após análise de consultas, índices, hints, paralelismo e particionamento. Tempos aproximados; sem identificação do cliente ou promessa de resultado equivalente.
+
 Os dois e-books técnicos estão no catálogo e na página inicial, com landing pages bilíngues baseadas nos PDFs fornecidos pelo autor. Apenas as capas são publicadas; os arquivos integrais não são disponibilizados no site. As edições dos livros são em inglês, sem promessa de videoaulas, certificação, emprego ou resultados de performance. As compras são encaminhadas à Payhip pelos links fornecidos pelo autor, sem preço ou condições não confirmados no site. Os links antigos de SQL, PL/SQL e pacote continuam direcionando ao catálogo, sem ofertas próprias.
 
 O Fatura na Risca está em preparação para publicação, com preço planejado de R$ 10. Não há um link de produção confirmado da Play Store no site.

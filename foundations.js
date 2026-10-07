@@ -49,12 +49,51 @@ const foundationCopy = {
     closing:'Your first step starts<br>with a solid foundation.', closingIntro:'Explore what the guide offers and check purchase terms in the Payhip product page.', contact:'Ask a question', disclaimer:'Independent educational material. Oracle is a registered trademark of Oracle Corporation. The guide is not affiliated with, sponsored by or endorsed by Oracle. No promise of certification, employment or income.', other:"New materials to continue your learning are in development.", meta:'Explore Database Foundations: a 34-page English e-book with beginner SQL, a mini project, commented exercises and a study plan. View on Payhip.'
   }
 };
-function foundationStatus(f) { return '<a class="button primary" href="' + escapeText(f.purchaseUrl || 'https://payhip.com/b/oiJ15') + '" target="_blank" rel="noopener noreferrer">' + escapeText(f.validation) + ' ↗</a><p class="notice">' + escapeText(f.validationNote) + '</p>'; }
+function foundationStatus(f) {
+  const advanced=f.purchaseUrl==='https://payhip.com/b/YsMiQ';
+  const pt=state.language==='pt';
+  return '<div class="actions">'+ '<a class="button primary" href="' + escapeText(f.purchaseUrl || 'https://payhip.com/b/oiJ15') + '" target="_blank" rel="noopener noreferrer">' + (pt?'Comprar e-book na Payhip':'Buy the e-book on Payhip') + ' ↗</a><a class="button secondary" href="https://payhip.com/preview/'+(advanced?'YsMiQ':'oiJ15')+'" target="_blank" rel="noopener noreferrer">'+(pt?'Ler amostra gratuita':'Read a free preview')+' ↗</a></div><p class="notice">' + escapeText(f.validationNote) + '</p>';
+}
+function ebookComparison() {
+  const pt=state.language==='pt';
+  const rows=pt?[
+    ['Seu ponto de partida','Começando do zero','Já conhece SQL básico'],
+    ['Foco da prática','Tabelas, relacionamentos, filtros, JOIN e agrupamentos','CTEs, funções analíticas, MERGE e planos de execução'],
+    ['Projeto','Loja virtual com quatro tabelas e consultas básicas','Conciliação de vendas e pagamentos e indicadores mensais'],
+    ['Formato e idioma','PDF em inglês · 34 páginas','PDF em inglês · 44 páginas']
+  ]:[
+    ['Your starting point','Starting from scratch','Already familiar with basic SQL'],
+    ['Practice focus','Tables, relationships, filters, JOINs and grouping','CTEs, window functions, MERGE and execution plans'],
+    ['Project','An online store with four tables and basic queries','Sales and payment reconciliation and monthly indicators'],
+    ['Format and language','English PDF · 34 pages','English PDF · 44 pages']
+  ];
+  return '<section class="ebook-choice"><h2>'+(pt?'Qual livro é para você?':'Which book is right for you?')+'</h2><p>'+(pt?'Escolha pelo seu conhecimento atual, não pela quantidade de páginas. Os dois guias são em inglês e incluem exemplos, exercícios comentados e um plano de estudo.':'Choose based on your current knowledge, not the page count. Both English-language guides include examples, explained exercises and a study plan.')+'</p><div class="comparison-scroll" tabindex="0" role="region" aria-label="'+(pt?'Comparação dos e-books':'E-book comparison')+'"><table><caption class="sr-only">'+(pt?'Comparação de nível, conteúdo, projeto e formato':'Comparison of level, content, project and format')+'</caption><thead><tr><th scope="col">'+(pt?'Critério':'Criteria')+'</th><th scope="col"><a class="text-link" href="'+link('databases')+'">Database Foundations</a></th><th scope="col"><a class="text-link" href="'+link('advanced-sql')+'">Advanced SQL with Oracle</a></th></tr></thead><tbody>'+rows.map(row=>'<tr><th scope="row">'+row[0]+'</th><td>'+row[1]+'</td><td>'+row[2]+'</td></tr>').join('')+'</tbody></table></div></section>';
+}
+function ebookPractice(f) {
+  const pt=state.language==='pt', advanced=!!f.projectStages;
+  const items=advanced?(pt?['Construir rankings e totais acumulados com funções analíticas','Conciliar vendas e pagamentos sem multiplicar os totais','Validar uma sincronização com MERGE e testar o rollback','Comparar consultas equivalentes usando evidências de execução']:['Build rankings and running totals with window functions','Reconcile sales and payments without multiplying totals','Validate a MERGE synchronization and test rollback','Compare equivalent queries using execution evidence']):(pt?['Modelar clientes, produtos, pedidos e itens com chaves e relacionamentos','Consultar e filtrar informações com SELECT e WHERE','Relacionar tabelas com JOIN e encontrar clientes sem pedidos','Calcular totais e agrupar resultados de uma loja virtual']:['Model customers, products, orders and items with keys and relationships','Query and filter information with SELECT and WHERE','Join tables and find customers without orders','Calculate totals and group results for an online store']);
+  return '<section class="section"><div class="wrap detail-grid"><div><span class="kicker">'+(pt?'Aprender fazendo':'Learn by doing')+'</span><h2>'+(pt?'O que você vai praticar':'What you will practice')+'</h2><p>'+(pt?'Tarefas concretas do guia para transformar leitura em consultas que você consegue testar e explicar.':'Concrete tasks from the guide turn reading into queries you can test and explain.')+'</p></div><div>'+list(items)+'<p class="notice">'+(pt?'Objetivos de prática, não garantia de resultado. Use um ambiente de estudo e valide suas respostas com o material.':'Practice objectives, not guaranteed results. Use a study environment and check your answers against the material.')+'</p></div></div></section>';
+}
+function ebookPurchaseFaq() {
+  return state.language==='pt'?[
+    ['Como recebo o arquivo?','As páginas dos produtos na Payhip informam download digital imediato. Confira o procedimento de acesso apresentado pela plataforma ao concluir a compra. O site da consultoria não processa o pagamento nem entrega o arquivo integral.'],
+    ['Onde consulto preço e condições de compra?','Na página do produto e no checkout da Payhip. Confira o valor final e as condições antes de confirmar. Para dúvidas sobre licença ou reembolso, consulte support@teehowconsultoria.com.br antes da compra.'],
+    ['Posso redistribuir ou usar em treinamento de uma equipe?','A compra não deve ser interpretada como autorização para redistribuição ou treinamento coletivo. Para esclarecer a licença ou solicitar uso em equipe, consulte support@teehowconsultoria.com.br antes da compra.'],
+    ['Como solicito suporte?','Envie sua dúvida para support@teehowconsultoria.com.br, informando o título do e-book. Em problemas de acesso, inclua a referência do pedido, mas nunca senhas ou dados de cartão.'],
+    ['Posso conhecer o conteúdo antes de comprar?','Sim. O botão Ler amostra gratuita abre a prévia pública disponibilizada na Payhip. A amostra não é o livro completo.']
+  ]:[
+    ['How do I receive the file?','The Payhip product pages list immediate digital download. Follow the access instructions shown by the platform after purchase. This consulting website does not process payment or deliver the complete file.'],
+    ['Where can I check pricing and purchase terms?','On the Payhip product page and at checkout. Check the final amount and terms before confirming. For license or refund questions, contact support@teehowconsultoria.com.br before purchasing.'],
+    ['Can I redistribute it or use it to train a team?','A purchase should not be interpreted as permission to redistribute the material or train a group. To clarify the license or request team use, contact support@teehowconsultoria.com.br before purchasing.'],
+    ['How do I request support?','Email support@teehowconsultoria.com.br with the e-book title. For access issues, include your order reference, but never passwords or card details.'],
+    ['Can I explore the content before purchasing?','Yes. Read a free preview opens the public preview available on Payhip. The preview is not the complete book.']
+  ];
+}
 function ebookCatalogCard(f,page) {
-  return '<article class="ebook-feature"><div class="ebook-thumb"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" loading="lazy"></div><div><span class="kicker">' + f.label + '</span><h2>' + f.title + '</h2><p class="ebook-subtitle">' + f.subtitle + '</p><p>' + f.summary + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div><div class="actions">' + button(f.view,link(page)) + '</div><p class="notice"><span class="pill">' + f.validation + '</span></p></div></article>';
+  return '<article class="ebook-feature"><div class="ebook-thumb"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" loading="lazy"></div><div><span class="kicker">' + f.label + '</span><h2>' + f.title + '</h2><p class="ebook-subtitle">' + f.subtitle + '</p><p>' + f.summary + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div><div class="actions">' + button(f.view,link(page)) + '</div><p class="notice"><span class="pill">' + (state.language==='pt'?'Disponível na Payhip':'Available on Payhip') + '</span></p></div></article>';
 }
 function foundationCatalog(c) {
-  return '<div class="ebook-catalog">' + ebookCatalogCard(foundationCopy[state.language],'databases') + ebookCatalogCard(advancedCopy[state.language],'advanced-sql') + '</div><p class="notice">' + foundationCopy[state.language].other + '</p>';
+  return (state.page==='courses'?ebookComparison():'') + '<div class="ebook-catalog">' + ebookCatalogCard(foundationCopy[state.language],'databases') + ebookCatalogCard(advancedCopy[state.language],'advanced-sql') + '</div><p class="notice">' + foundationCopy[state.language].other + '</p>';
 }
 function ebookProject(f) {
   if(f.projectStages) return '<div class="ebook-project">' + f.projectStages.map(([title,text])=>'<div class="schema-table"><b>' + escapeText(title) + '</b><p>' + escapeText(text) + '</p></div>').join('<span aria-hidden="true">↓</span>') + '</div>';
@@ -64,10 +103,10 @@ function foundationLanding(c) { return ebookLanding(foundationCopy[state.languag
 function ebookLanding(f,c) {
   return '<section class="hero ebook-hero"><div class="wrap"><a class="back" href="' + link('courses') + '">' + c.back + '</a><div class="hero-grid"><div><div class="eyebrow">' + f.label + '</div><p class="ebook-name">' + f.title + ' <span>' + f.subtitle + '</span></p><h1>' + f.tagline + '</h1><p class="lead">' + f.intro + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div>' + foundationStatus(f) + '</div><figure class="ebook-cover"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" fetchpriority="high"><figcaption>' + f.previewLabel + '</figcaption></figure></div></div></section>' +
     '<section class="ebook-stats" aria-label="' + f.title + '"><div class="wrap">' + f.stats.map(([value,label])=>'<div><strong>' + value + '</strong><span>' + label + '</span></div>').join('') + '</div></section>' +
-    '<section class="section"><div class="wrap"><div class="section-heading"><h2>' + f.learnTitle + '</h2><p>' + f.learnIntro + '</p></div><div class="service-grid">' + f.modules.map(([title,text],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + text + '</p></article>').join('') + '</div></div></section>' +
+    ebookPractice(f) + '<section class="section gray"><div class="wrap"><div class="section-heading"><h2>' + f.learnTitle + '</h2><p>' + f.learnIntro + '</p></div><div class="service-grid">' + f.modules.map(([title,text],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + text + '</p></article>').join('') + '</div></div></section>' +
     '<section class="section gray"><div class="wrap product-grid"><div><span class="kicker">' + f.projectKicker + '</span><h2>' + f.projectTitle + '</h2><p>' + f.projectIntro + '</p>' + list(f.projectTasks) + '<p class="notice">' + f.projectNote + '</p></div>' + ebookProject(f) + '</div></section>' +
     '<section class="section"><div class="wrap detail-grid"><div><h2>' + f.includedTitle + '</h2>' + list(f.included) + '</div><aside class="detail-box"><h3>' + f.audienceTitle + '</h3><p>' + f.audience + '</p><span class="pill">' + f.level + '</span></aside></div></section>' +
     '<section class="section gray"><div class="wrap detail-grid"><div><span class="kicker">Tee How</span><h2>' + f.authorTitle + '</h2></div><div><h3>' + f.authorIntro + '</h3><p>' + f.authorText + '</p></div></div></section>' +
-    '<section class="section"><div class="wrap ebook-faq"><h2>' + f.faqTitle + '</h2>' + f.faq.map(([question,answer])=>'<details><summary>' + question + '</summary><p>' + answer + '</p></details>').join('') + '</div></section>' +
+    '<section class="section"><div class="wrap ebook-faq"><h2>' + f.faqTitle + '</h2>' + [...f.faq,...ebookPurchaseFaq()].map(([question,answer])=>'<details><summary>' + question + '</summary><p>' + answer + '</p></details>').join('') + '</div></section>' +
     '<section class="contact-band"><div class="wrap contact-grid"><div><h2>' + f.closing + '</h2><p>' + f.closingIntro + '</p></div><div>' + foundationStatus(f) + button(f.contact,email(c.materialSubject+f.title),'secondary') + '</div></div></section><div class="wrap"><p class="notice ebook-disclaimer">' + f.disclaimer + '</p></div>';
 }
