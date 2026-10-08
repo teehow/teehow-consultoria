@@ -37,6 +37,8 @@ A página de serviços apresenta entregas sujeitas ao escopo da proposta. Nenhum
 
 O caso anonimizado da página inicial foi informado e autorizado pelo responsável em 7 de outubro de 2026: sistema de gestão de documentos com leitura/escrita por procedures; relatório de cerca de 30 minutos para cerca de 30 segundos após análise de consultas, índices, hints, paralelismo e particionamento. Tempos aproximados; sem identificação do cliente ou promessa de resultado equivalente.
 
+A página inicial inclui mais dois relatos bilíngues autorizados pelo responsável: migração de mais de 1 TB de dados bancários em fases por agência, e atuação em ambiente financeiro de arrecadação 24x7 com SQL Server. Os nomes das instituições foram omitidos. Volume e regime operacional não são apresentados como resultados garantidos, ausência de incidentes ou SLA. As áreas de atuação podem ser expandidas por teclado ou toque.
+
 Os dois e-books técnicos estão no catálogo e na página inicial, com landing pages bilíngues baseadas nos PDFs fornecidos pelo autor. Apenas as capas são publicadas; os arquivos integrais não são disponibilizados no site. As edições dos livros são em inglês, sem promessa de videoaulas, certificação, emprego ou resultados de performance. As compras são encaminhadas à Payhip pelos links fornecidos pelo autor, sem preço ou condições não confirmados no site. Os links antigos de SQL, PL/SQL e pacote continuam direcionando ao catálogo, sem ofertas próprias.
 
 O Fatura na Risca está em preparação para publicação, com preço planejado de R$ 10. Não há um link de produção confirmado da Play Store no site.
