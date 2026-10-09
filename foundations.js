@@ -50,24 +50,9 @@ const foundationCopy = {
   }
 };
 function foundationStatus(f) {
-  const advanced=f.purchaseUrl==='https://payhip.com/b/YsMiQ';
-  const pt=state.language==='pt';
-  return '<div class="actions">'+ '<a class="button primary" href="' + escapeText(f.purchaseUrl || 'https://payhip.com/b/oiJ15') + '" target="_blank" rel="noopener noreferrer">' + (pt?'Comprar e-book na Payhip':'Buy the e-book on Payhip') + ' ↗</a><a class="button secondary" href="https://payhip.com/preview/'+(advanced?'YsMiQ':'oiJ15')+'" target="_blank" rel="noopener noreferrer">'+(pt?'Ler amostra gratuita':'Read a free preview')+' ↗</a></div><p class="notice">' + escapeText(f.validationNote) + '</p>';
-}
-function ebookComparison() {
-  const pt=state.language==='pt';
-  const rows=pt?[
-    ['Seu ponto de partida','Começando do zero','Já conhece SQL básico'],
-    ['Foco da prática','Tabelas, relacionamentos, filtros, JOIN e agrupamentos','CTEs, funções analíticas, MERGE e planos de execução'],
-    ['Projeto','Loja virtual com quatro tabelas e consultas básicas','Conciliação de vendas e pagamentos e indicadores mensais'],
-    ['Formato e idioma','PDF em inglês · 34 páginas','PDF em inglês · 44 páginas']
-  ]:[
-    ['Your starting point','Starting from scratch','Already familiar with basic SQL'],
-    ['Practice focus','Tables, relationships, filters, JOINs and grouping','CTEs, window functions, MERGE and execution plans'],
-    ['Project','An online store with four tables and basic queries','Sales and payment reconciliation and monthly indicators'],
-    ['Format and language','English PDF · 34 pages','English PDF · 44 pages']
-  ];
-  return '<section class="ebook-choice"><h2>'+(pt?'Qual livro é para você?':'Which book is right for you?')+'</h2><p>'+(pt?'Escolha pelo seu conhecimento atual, não pela quantidade de páginas. Os dois guias são em inglês e incluem exemplos, exercícios comentados e um plano de estudo.':'Choose based on your current knowledge, not the page count. Both English-language guides include examples, explained exercises and a study plan.')+'</p><div class="comparison-scroll" tabindex="0" role="region" aria-label="'+(pt?'Comparação dos e-books':'E-book comparison')+'"><table><caption class="sr-only">'+(pt?'Comparação de nível, conteúdo, projeto e formato':'Comparison of level, content, project and format')+'</caption><thead><tr><th scope="col">'+(pt?'Critério':'Criteria')+'</th><th scope="col"><a class="text-link" href="'+link('databases')+'">Database Foundations</a></th><th scope="col"><a class="text-link" href="'+link('advanced-sql')+'">Advanced SQL with Oracle</a></th></tr></thead><tbody>'+rows.map(row=>'<tr><th scope="row">'+row[0]+'</th><td>'+row[1]+'</td><td>'+row[2]+'</td></tr>').join('')+'</tbody></table></div></section>';
+  const p=ebookBySlug(state.page),lang=state.language;
+  if(!p) return '';
+  return '<div class="actions">'+ebookBuyLink(p,lang)+'<a class="button secondary" href="'+escapeText(p.previewUrl)+'" target="_blank" rel="noopener noreferrer">'+(lang==='pt'?'Ler amostra gratuita':'Read a free preview')+' ↗</a></div><p class="notice">'+escapeText(ebookPrice(p,lang))+' · '+catalogCopy[lang].priceNote+'</p>';
 }
 function ebookPractice(f) {
   const pt=state.language==='pt', advanced=!!f.projectStages;
@@ -89,19 +74,15 @@ function ebookPurchaseFaq() {
     ['Can I explore the content before purchasing?','Yes. Read a free preview opens the public preview available on Payhip. The preview is not the complete book.']
   ];
 }
-function ebookCatalogCard(f,page) {
-  return '<article class="ebook-feature"><div class="ebook-thumb"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" loading="lazy"></div><div><span class="kicker">' + f.label + '</span><h2>' + f.title + '</h2><p class="ebook-subtitle">' + f.subtitle + '</p><p>' + f.summary + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div><div class="actions">' + button(f.view,link(page)) + '</div><p class="notice"><span class="pill">' + (state.language==='pt'?'Disponível na Payhip':'Available on Payhip') + '</span></p></div></article>';
-}
-function foundationCatalog(c) {
-  return (state.page==='courses'?ebookComparison():'') + '<div class="ebook-catalog">' + ebookCatalogCard(foundationCopy[state.language],'databases') + ebookCatalogCard(advancedCopy[state.language],'advanced-sql') + '</div><p class="notice">' + foundationCopy[state.language].other + '</p>';
-}
+function foundationCatalog() { return '<div class="publication-grid">'+catalogGrid(filterEbooks(ebooks),state.language,'h3')+'</div><p class="notice">'+catalogCopy[state.language].priceNote+'</p>'; }
 function ebookProject(f) {
   if(f.projectStages) return '<div class="ebook-project">' + f.projectStages.map(([title,text])=>'<div class="schema-table"><b>' + escapeText(title) + '</b><p>' + escapeText(text) + '</p></div>').join('<span aria-hidden="true">↓</span>') + '</div>';
   return '<div class="ebook-project" aria-label="CUSTOMERS, ORDERS, ORDER_ITEMS, PRODUCTS"><div class="schema-table"><b>CUSTOMERS</b><code>customer_id · name · city</code></div><span aria-hidden="true">↓</span><div class="schema-table"><b>ORDERS</b><code>order_id · customer_id · order_date</code></div><span aria-hidden="true">↓</span><div class="schema-table"><b>ORDER_ITEMS</b><code>order_id · product_id · quantity</code></div><span aria-hidden="true">↑</span><div class="schema-table"><b>PRODUCTS</b><code>product_id · product_name · price</code></div></div>';
 }
 function foundationLanding(c) { return ebookLanding(foundationCopy[state.language],c); }
 function ebookLanding(f,c) {
-  return '<section class="hero ebook-hero"><div class="wrap"><a class="back" href="' + link('courses') + '">' + c.back + '</a><div class="hero-grid"><div><div class="eyebrow">' + f.label + '</div><p class="ebook-name">' + f.title + ' <span>' + f.subtitle + '</span></p><h1>' + f.tagline + '</h1><p class="lead">' + f.intro + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div>' + foundationStatus(f) + '</div><figure class="ebook-cover"><img src="' + escapeText(f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="1024" height="1536" fetchpriority="high"><figcaption>' + f.previewLabel + '</figcaption></figure></div></div></section>' +
+  const product=ebookBySlug(state.page);
+  return '<section class="hero ebook-hero"><div class="wrap"><a class="back" href="' + link('courses') + '">' + c.back + '</a><div class="hero-grid"><div><div class="eyebrow">' + f.label + '</div><p class="ebook-name">' + f.title + ' <span>' + f.subtitle + '</span></p><h1>' + f.tagline + '</h1><p class="lead">' + f.intro + '</p><div class="ebook-tags"><span>' + f.format + '</span><span>' + f.language + '</span></div>' + foundationStatus(f) + '</div><figure class="ebook-cover"><img src="' + escapeText(product?.coverImage || f.cover || 'assets/database-foundations-cover-v2.png') + '" alt="' + escapeText(f.coverAlt) + '" width="600" height="900" fetchpriority="high"><figcaption>' + f.previewLabel + '</figcaption></figure></div></div></section>' +
     '<section class="ebook-stats" aria-label="' + f.title + '"><div class="wrap">' + f.stats.map(([value,label])=>'<div><strong>' + value + '</strong><span>' + label + '</span></div>').join('') + '</div></section>' +
     ebookPractice(f) + '<section class="section gray"><div class="wrap"><div class="section-heading"><h2>' + f.learnTitle + '</h2><p>' + f.learnIntro + '</p></div><div class="service-grid">' + f.modules.map(([title,text],i)=>'<article class="service-card"><span class="kicker">0' + (i+1) + '</span><h3>' + title + '</h3><p>' + text + '</p></article>').join('') + '</div></div></section>' +
     '<section class="section gray"><div class="wrap product-grid"><div><span class="kicker">' + f.projectKicker + '</span><h2>' + f.projectTitle + '</h2><p>' + f.projectIntro + '</p>' + list(f.projectTasks) + '<p class="notice">' + f.projectNote + '</p></div>' + ebookProject(f) + '</div></section>' +

@@ -4,6 +4,8 @@ Site institucional estático e bilíngue, em português e inglês, para GitHub P
 
 ## Conteúdo
 
+O catálogo foi modernizado com dados centralizados, filtros, busca, compra direta na Payhip e cards bilíngues. Manual de cadastro, preços, categorias, capas, analytics e limites de SEO: [CATALOG.md](CATALOG.md). Testes automatizados: `node --test tests/catalog.test.cjs`.
+
 - Início, serviços, cursos e e-books, Fatura na Risca e contato.
 - Serviços focados em banco de dados: tuning, administração, modelagem, SQL/PLSQL, integração e análise, com fluxo de diagnóstico, plano de ação e validação.
 - Primeiro material: Database Foundations: A Practical Beginner's Guide (PDF em inglês, edição 1.0, 34 páginas). Landing page em português e inglês na rota `#/pt/databases` / `#/en/databases`, associada ao catálogo e à página inicial.
@@ -31,7 +33,7 @@ O domínio personalizado `www.teehowconsultoria.com.br` está registrado no arqu
 
 ## Informações comerciais
 
-O catálogo compara os níveis, conteúdos e projetos dos dois e-books. As landing pages mostram objetivos concretos de prática, um CTA de compra padronizado e as amostras públicas já disponíveis na Payhip (`https://payhip.com/preview/oiJ15` e `https://payhip.com/preview/YsMiQ`). As páginas dos produtos foram verificadas em 7 de outubro de 2026 e informam download digital imediato. Preço final e condições permanecem no checkout; não se presume licença coletiva ou política de reembolso. Suporte: support@teehowconsultoria.com.br.
+O catálogo permite filtrar por nível e assunto e buscar título/palavras-chave. Cards e detalhes compartilham preços, links e capas configurados em `catalog.js`. As amostras públicas continuam na Payhip (`https://payhip.com/preview/oiJ15` e `https://payhip.com/preview/YsMiQ`). O valor final é confirmado no checkout. Suporte: support@teehowconsultoria.com.br.
 
 A página de serviços apresenta entregas sujeitas ao escopo da proposta. Nenhum depoimento, resultado percentual ou caso de cliente é publicado sem confirmação e autorização do responsável.
 
@@ -39,6 +41,6 @@ O caso anonimizado da página inicial foi informado e autorizado pelo responsáv
 
 A página inicial inclui mais dois relatos bilíngues autorizados pelo responsável: migração de mais de 1 TB de dados bancários em fases por agência, e atuação em ambiente financeiro de arrecadação 24x7 com SQL Server. Os nomes das instituições foram omitidos. Volume e regime operacional não são apresentados como resultados garantidos, ausência de incidentes ou SLA. As áreas de atuação podem ser expandidas por teclado ou toque.
 
-Os dois e-books técnicos estão no catálogo e na página inicial, com landing pages bilíngues baseadas nos PDFs fornecidos pelo autor. Apenas as capas são publicadas; os arquivos integrais não são disponibilizados no site. As edições dos livros são em inglês, sem promessa de videoaulas, certificação, emprego ou resultados de performance. As compras são encaminhadas à Payhip pelos links fornecidos pelo autor, sem preço ou condições não confirmados no site. Os links antigos de SQL, PL/SQL e pacote continuam direcionando ao catálogo, sem ofertas próprias.
+Os dois e-books técnicos estão no catálogo e na página inicial, com landing pages bilíngues baseadas nos PDFs fornecidos pelo autor. Apenas as capas são publicadas; os arquivos integrais não são disponibilizados no site. As edições dos livros são em inglês, sem promessa de videoaulas, certificação, emprego ou resultados de performance. As compras são encaminhadas à Payhip pelos links fornecidos pelo autor, com preços locais configuráveis e orientação para conferir o valor final na plataforma. Os links antigos de SQL, PL/SQL e pacote continuam direcionando ao catálogo, sem ofertas próprias.
 
 O Fatura na Risca está disponível na Google Play: https://play.google.com/store/apps/details?id=br.com.teehow.faturanarisca. A página inicial e a página do aplicativo têm um botão para a loja nos dois idiomas. Preço verificado em 9 de outubro de 2026: R$ 9,99 no Brasil, compra única; o preço final e a compatibilidade devem ser confirmados na Google Play.
