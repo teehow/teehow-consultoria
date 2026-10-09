@@ -41,4 +41,4 @@ A página inicial inclui mais dois relatos bilíngues autorizados pelo responsá
 
 Os dois e-books técnicos estão no catálogo e na página inicial, com landing pages bilíngues baseadas nos PDFs fornecidos pelo autor. Apenas as capas são publicadas; os arquivos integrais não são disponibilizados no site. As edições dos livros são em inglês, sem promessa de videoaulas, certificação, emprego ou resultados de performance. As compras são encaminhadas à Payhip pelos links fornecidos pelo autor, sem preço ou condições não confirmados no site. Os links antigos de SQL, PL/SQL e pacote continuam direcionando ao catálogo, sem ofertas próprias.
 
-O Fatura na Risca está em preparação para publicação, com preço planejado de R$ 10. Não há um link de produção confirmado da Play Store no site.
+O Fatura na Risca está disponível na Google Play: https://play.google.com/store/apps/details?id=br.com.teehow.faturanarisca. A página inicial e a página do aplicativo têm um botão para a loja nos dois idiomas. Preço verificado em 9 de outubro de 2026: R$ 9,99 no Brasil, compra única; o preço final e a compatibilidade devem ser confirmados na Google Play.
