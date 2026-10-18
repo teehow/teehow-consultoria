@@ -1,0 +1,12 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const vm=require('node:vm');
+const fs=require('node:fs');
+const path=require('node:path');
+const context=vm.createContext({state:{language:'pt'},escapeText:value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),link:page=>'#/pt/'+page});
+vm.runInContext(fs.readFileSync(path.join(__dirname,'../author.js'),'utf8'),context);
+const render=language=>{context.state.language=language;return vm.runInContext('authorPage()',context);};
+test('both original Amazon links appear exactly once',()=>{for(const lang of ['pt','en']){const html=render(lang);assert.equal(html.split('https://www.amazon.com.br/dp/B0HKSP4H3Z').length-1,1);assert.equal(html.split('https://www.amazon.com.br/dp/B0HNF51QJL').length-1,1);assert.equal((html.match(/<h1>/g)||[]).length,1);}});
+test('second book keeps original title, official cover and safe purchase link',()=>{const html=render('pt');assert.ok(html.includes('As Vozes de Elanrin'));assert.ok(html.includes('width="657" height="1050"'));assert.ok(html.includes('ecos-livro-2-as-vozes-de-elanrin.webp'));assert.ok(html.includes('rel="noopener noreferrer"'));assert.ok(html.includes('aria-labelledby="second-novel-title"'));});
+test('Portuguese edition is explicit in both interface languages',()=>{assert.ok(render('pt').includes('E-book em português'));assert.ok(render('en').includes('Portuguese-language e-book'));assert.ok(render('en').includes('View Book 2 on Amazon Kindle'));assert.ok(!render('en').includes('Ver Livro 2'));});
+test('reference price and price caveat appear',()=>{assert.ok(render('pt').includes('R$ 15,14'));assert.ok(render('pt').includes('18/10/2026'));assert.ok(render('pt').includes('Confira o preço atualizado'));assert.ok(render('en').includes('Check the current price'));});

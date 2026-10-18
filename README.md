@@ -4,6 +4,8 @@ Site institucional estático e bilíngue, em português e inglês, para GitHub P
 
 ## Conteúdo
 
+- Espaço pessoal em `#/pt/author` e `#/en/author`: os dois volumes de Ecos do Mundo Partido, separados do catálogo técnico. Livro 2: As Vozes de Elanrin, https://www.amazon.com.br/dp/B0HNF51QJL. Capa e informações conferidas na Amazon em 18/10/2026; edição em português e preço de referência de R$ 15,14, com confirmação do valor final na loja.
+
 O catálogo foi modernizado com dados centralizados, filtros, busca, compra direta na Payhip e cards bilíngues. Manual de cadastro, preços, categorias, capas, analytics e limites de SEO: [CATALOG.md](CATALOG.md). Testes automatizados: `node --test tests/catalog.test.cjs`.
 
 - Início, serviços, cursos e e-books, Fatura na Risca e contato.
