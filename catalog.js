@@ -18,11 +18,20 @@ const ebooks = [
     published:true, featured:false, order:2,
     description:{pt:'Aprofunde suas habilidades em SQL com consultas Oracle, funções analíticas, CTEs, relatórios, conciliação de dados e análise de desempenho.',en:'Take your SQL skills further with advanced Oracle queries, analytic functions, CTEs, reporting, data reconciliation, and performance analysis.'},
     highlights:{pt:['10 exercícios com respostas comentadas','Projeto de conciliação de vendas e pagamentos','Referência Oracle 19c e plano de estudos'],en:['10 exercises with explained answers','Sales and payment reconciliation project','Oracle 19c baseline and study plan']}
+  },
+  {
+    id:'database-design', slug:'database-design', title:'Database Design in Practice: A Practical Guide to Data Modeling, Normalization and Physical Design',
+    category:'modeling', tags:['modeling','modelagem','normalization','normalização','design','keys','constraints','oracle','physical design'], level:'beginner-intermediate',
+    language:'en', format:'PDF', coverImage:'assets/database-design-in-practice-cover-v2.webp', width:600, height:900,
+    price:7.90, currency:'USD', payhipUrl:'https://payhip.com/b/fKJ1V', previewUrl:'https://payhip.com/preview/fKJ1V',
+    published:true, featured:false, order:3,
+    description:{pt:'Transforme requisitos de negócio em modelos de dados, com exemplos de relacionamentos, normalização e projeto físico de bancos de dados relacionais.',en:'Turn business requirements into data models with practical examples of relationships, normalization and physical relational database design.'},
+    highlights:{pt:['15 exercícios com respostas comentadas','Projeto de modelagem de uma loja virtual','Diagramas, checklist e plano de estudos'],en:['15 exercises with explained answers','Online store database design project','Diagrams, checklist and study plan']}
   }
 ];
 const ebookTaxonomy = {
-  levels:{beginner:{pt:'Iniciante',en:'Beginner'},intermediate:{pt:'Intermediário',en:'Intermediate'},advanced:{pt:'Avançado',en:'Advanced'}},
-  subjects:{fundamentals:{pt:'Fundamentos',en:'Fundamentals'},sql:{pt:'SQL',en:'SQL'},oracle:{pt:'Oracle',en:'Oracle'}},
+  levels:{beginner:{pt:'Iniciante',en:'Beginner'},'beginner-intermediate':{pt:'Iniciante a intermediário',en:'Beginner to Intermediate'},intermediate:{pt:'Intermediário',en:'Intermediate'},advanced:{pt:'Avançado',en:'Advanced'}},
+  subjects:{fundamentals:{pt:'Fundamentos',en:'Fundamentals'},sql:{pt:'SQL',en:'SQL'},oracle:{pt:'Oracle',en:'Oracle'},modeling:{pt:'Modelagem de dados',en:'Data modeling'}},
   languages:{en:{pt:'Inglês',en:'English'},pt:{pt:'Português',en:'Portuguese'}}
 };
 const catalogCopy = {

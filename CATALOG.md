@@ -1,5 +1,7 @@
 # Catálogo de publicações técnicas
 
+Atualização de 23/10/2026: terceiro produto `database-design`, categoria `modeling`, nível `beginner-intermediate`. Dados conferidos em https://payhip.com/b/fKJ1V: PDF em inglês, USD 7.90, 15 exercícios e projeto de loja virtual. A capa foi fornecida/aprovada pelo autor. Detalhes bilíngues em `database-design.js`; sem contagem de páginas presumida. Preço e links permanecem somente em `catalog.js`.
+
 ## Implementação
 
 Site estático (HTML/CSS/JavaScript), sem framework, backend, instalação de pacotes ou build. `catalog.js` é carregado antes dos demais scripts e utiliza os helpers e o idioma do site. As rotas `#/pt/courses` e `#/en/courses` foram preservadas, assim como detalhes dos livros, cabeçalho, rodapé, páginas institucionais e políticas.

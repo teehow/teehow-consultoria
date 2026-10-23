@@ -4,7 +4,7 @@ const PLAY_STORE = 'https://play.google.com/store/apps/details?id=br.com.teehow.
 const CNPJ = '63.600.380/0001-15';
 function companyRegistrationLabel() { return state.language==='pt' ? 'CNPJ' : 'Brazilian business registration (CNPJ)'; }
 const POLICY = 'https://teehow.github.io/controle-financeiro-app/';
-const pages = ['home', 'services', 'courses', 'app', 'contact', 'databases', 'sql', 'plsql', 'bundle', 'about', 'author', 'advanced-sql'];
+const pages = ['home', 'services', 'courses', 'app', 'contact', 'databases', 'sql', 'plsql', 'bundle', 'about', 'author', 'advanced-sql', 'database-design'];
 const copy = {
   pt: {
     locale:'pt-BR', suffix:'Consultoria em Banco de Dados', skip:'Pular para o conteúdo', menu:'Menu', close:'Fechar menu', change:'Switch to English', nav:['Início','Serviços','Cursos e e-books','Fatura na Risca','Contato'],
@@ -162,13 +162,14 @@ function content(page,c) {
   if (page==='courses') return coursesLanding();
   if (page==='databases') return foundationLanding(c);
   if (page==='advanced-sql') return advancedLanding(c);
+  if (page==='database-design') return designLanding(c);
   if (page==='app') return pageHead('Fatura na Risca',c.appTagline,c) + '<section class="section"><div class="wrap product-grid"><div class="product-copy"><span class="kicker">Android / ' + c.productKicker + '</span><h2>' + c.productTitle + '</h2><p>' + c.appIntro + '</p><p>' + c.appDetail + '</p><p><strong>' + c.appPrivacy + '</strong></p><p>' + c.appPrice + '</p><p class="notice">' + c.appNote + '</p>' + legal(c) + '</div>' + appPanel(c) + '</div></section>' + contactBand(c);
   if (page==='contact') return pageHead(c.contactPage,c.contactPageIntro,c) + '<section class="section"><div class="wrap detail-grid"><div><span class="kicker">' + c.direct + '</span><h2>' + c.contactBlockTitle + '</h2><p>' + c.contactBlockIntro + '</p>' + button(c.send,email(c.subject)) + '<p class="notice">' + c.contactNote + '</p></div><div class="contact-card"><h3>Tee How</h3><dl><dt>' + c.company + '</dt><dd>Tee How Consultoria em Banco de Dados</dd><dt>' + companyRegistrationLabel() + '</dt><dd>' + CNPJ + '</dd><dt>' + c.responsible + '</dt><dd>Vitor Tee How Siao Junior</dd><dt>E-mail</dt><dd><a class="text-link" href="' + email(c.subject) + '">' + EMAIL + '</a></dd></dl></div></div></section>';
   return courseDetail(page,c);
 }
 function render() {
   state=route(); const c=copy[state.language]; document.documentElement.lang=c.locale;
-  const active=state.page==='author'?'about':['databases','advanced-sql'].includes(state.page)?'courses':state.page;
+  const active=state.page==='author'?'about':['databases','advanced-sql','database-design'].includes(state.page)?'courses':state.page;
   const navigation=[...c.nav,authorCopy[state.language].about];
   document.querySelector('.skip-link').textContent=c.skip;
   document.getElementById('header').innerHTML='<div class="wrap header-inner">' + brand(c) + '<nav class="nav" id="nav" aria-label="' + (state.language==='pt'?'Navegação principal':'Main navigation') + '">' + ['home','services','courses','app','contact','about'].map((p,i)=>'<a href="' + link(p) + '"' + (active===p?' aria-current="page"':'') + '>' + navigation[i] + '</a>').join('') + '</nav><div class="header-actions"><button class="menu-button" aria-expanded="false" aria-controls="nav">' + c.menu + '</button><button class="lang-button" aria-label="' + c.change + '" lang="' + (state.language==='pt'?'en':'pt-BR') + '"><span aria-hidden="true">◎</span>' + (state.language==='pt'?'English':'Português') + '</button></div></div>';
@@ -180,6 +181,7 @@ function render() {
   document.querySelector('meta[name="description"]').content=state.page==='databases'?foundationCopy[state.language].meta:c.pageDescription;
   if(state.page==='author') document.querySelector('meta[name="description"]').content=authorCopy[state.language].meta;
   if(state.page==='advanced-sql') document.querySelector('meta[name="description"]').content=advancedCopy[state.language].meta;
+  if(state.page==='database-design') { document.title=designCopy[state.language].title+' | Tee How'; document.querySelector('meta[name="description"]').content=designCopy[state.language].meta; }
   updateEbookMetadata();
   bindEbookInteractions();
   document.querySelector('.lang-button').addEventListener('click',()=>{const next=state.language==='pt'?'en':'pt';try{localStorage.setItem('teehow-language',next);}catch{}location.hash='#/'+next+'/'+state.page;});
